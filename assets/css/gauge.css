@@ -1,0 +1,62 @@
+.gauge {
+  --gauge-bg-border-width: 20;
+  --gauge-bg-border-color: #636e72;
+  --gauge-bg-border-opacity: 1;
+  --gauge-bg-width: 18;
+  --gauge-bg-width-color: #dfe6e9;
+  --gauge-bg-width-opacity: 0.5;
+  --gauge-value-width: 10;
+  --gauge-value-bg-color: #6c5ce7;
+  --gauge-value-bg-opacity: 0.75;
+}
+
+.major-ticks {
+  --mjl-stroke: #2d3436;
+  --mjl-stroke-width: 1.2;
+  --mjl-stroke-linecap: butt;
+}
+
+.text {
+  --font-family: Helvetica;
+  --font-variant: normal;
+  --font-weight: bold;
+  --font-size: 10;
+  --font-color: black;
+  --font-opacity: 1;
+}
+
+#gauge-bg-border {
+  stroke-width: var(--gauge-bg-border-width);
+  stroke: var(--gauge-bg-border-color);
+  stroke-opacity: var(--gauge-bg-border-opacity);
+  fill: none;
+}
+
+#gauge-bg {
+  stroke-width: var(--gauge-bg-width);
+  stroke: var(--gauge-bg-width-color);
+  stroke-opacity: var(--gauge-bg-width-opacity);
+  fill: none;
+}
+
+#gauge-value {
+  stroke-width: var(--gauge-value-width);
+  stroke: var(--gauge-value-bg-color);
+  stroke-opacity: var(--gauge-value-bg-opacity);
+  fill: none;
+}
+
+#major-line-ticks {
+  stroke: var(--mjl-stroke);
+  stroke-width: var(--mjl-stroke-width);
+  stroke-linecap: var(--mjl-stroke-linecap);
+}
+
+.major-text {
+  font-family: var(--font-family);
+  font-variant: var(--font-variant);
+  font-weight: var(--font-weight);
+  font-size: var(--font-size);
+  color: var(--font-color);
+  opacity: var(--font-opacity);
+}
