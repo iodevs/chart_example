@@ -1,5 +1,6 @@
 # The directory Mix will write compiled artifacts to.
 /_build/
+/logs
 
 # If you run "mix test --cover", coverage assets end up here.
 /cover/
@@ -21,6 +22,7 @@ erl_crash.dump
 
 *.beam
 .elixir_ls/
+
 # Ignore package tarball (built via "mix hex.build").
 examples-*.tar
 
