@@ -3,7 +3,7 @@ defmodule Examples.Gauge.Settings do
 
   alias Examples.Gauge.Utils
 
-  @from_bottom 30
+  @from_bottom 35
 
   defmodule MajorTicks do
     @moduledoc false
@@ -26,31 +26,39 @@ defmodule Examples.Gauge.Settings do
   @type t() :: %__MODULE__{
           viewbox: nil | {pos_integer(), pos_integer()},
           range: nil | {number(), number()},
+          text_value_position: nil | {number(), number()},
+          major_ticks: nil | MajorTicks.t(),
+
+          # Internal
           gauge_radius: {number(), number()},
           gauge_center: {number(), number()},
           d_gauge_half_circle: String.t(),
           d_value: String.t(),
-          major_ticks: nil | MajorTicks.t()
+          text_value: String.t()
           # text_ticks: nil | String.t(),
-          # text_value: nil | String.t()
         }
 
   defstruct viewbox: nil,
             range: nil,
+            text_value_position: nil,
+            major_ticks: nil,
+
+            # Internal
             gauge_radius: {50, 50},
             gauge_center: {0, 0},
             d_gauge_half_circle: "",
             d_value: "",
-            major_ticks: nil
+            text_value: ""
 
   # text_ticks: nil,
-  # text_value: nil
 
   @spec set(list()) :: t()
   def set(config) do
     %__MODULE__{
       viewbox: key_guard(config, :viewbox, {160, 80}, &set_viewbox/1),
       range: key_guard(config, :range, {0, 300}, &set_range/1),
+      text_value_position:
+        key_guard(config, :text_value_position, {0, -5}, &set_text_value_position/1),
       major_ticks:
         key_guard(
           config,
@@ -75,6 +83,7 @@ defmodule Examples.Gauge.Settings do
     }
     |> put_gauge_center_circle()
     |> put_gauge_half_circle()
+    |> put_text_value_position()
     |> put_major_ticks_translate()
     |> put_major_ticks_positions()
   end
@@ -94,6 +103,10 @@ defmodule Examples.Gauge.Settings do
     range
   end
 
+  defp set_text_value_position({x, y} = position) when is_number(x) and is_number(y) do
+    position
+  end
+
   defp set_major_ticks_count(%MajorTicks{count: c} = major_ticks) when 1 < c and is_integer(c) do
     major_ticks
   end
@@ -111,6 +124,12 @@ defmodule Examples.Gauge.Settings do
       settings
       | gauge_center: {w / 2, h / 2 + @from_bottom}
     }
+  end
+
+  defp put_text_value_position(
+         %__MODULE__{gauge_center: {cx, cy}, text_value_position: {x, y}} = settings
+       ) do
+    Kernel.put_in(settings.text_value_position, {cx + x, cy + y})
   end
 
   defp put_gauge_half_circle(

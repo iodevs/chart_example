@@ -29,16 +29,26 @@ defmodule Examples.Gauge do
 
   def render(%__MODULE__{} = gauge) do
     gauge
-    |> put_gauge_value()
+    |> put_gauge_value_half_circle()
+    |> put_value_as_text()
     |> Svg.generate()
   end
 
   # Private
-  defp put_gauge_value(%__MODULE__{data: nil} = gauge) do
+
+  defp put_value_as_text(%__MODULE__{data: nil} = gauge) do
+    Kernel.put_in(gauge.settings.text_value, "")
+  end
+
+  defp put_value_as_text(%__MODULE__{data: value} = gauge) do
+    Kernel.put_in(gauge.settings.text_value, "#{value}")
+  end
+
+  defp put_gauge_value_half_circle(%__MODULE__{data: nil} = gauge) do
     Kernel.put_in(gauge.settings.d_value, "")
   end
 
-  defp put_gauge_value(%__MODULE__{settings: settings, data: value} = gauge) do
+  defp put_gauge_value_half_circle(%__MODULE__{settings: settings, data: value} = gauge) do
     {cx, cy} = settings.gauge_center
     {rx, ry} = settings.gauge_radius
 
