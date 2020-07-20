@@ -17,12 +17,19 @@
 }
 
 .text {
-  --font-family: Helvetica;
-  --font-variant: normal;
-  --font-weight: bold;
-  --font-size: 10;
-  --font-color: black;
-  --font-opacity: 1;
+  --mt-font-size: 10;
+  --mt-font-color: black;
+  --mt-font-opacity: 1;
+  --mt-font-family: sans-serif;
+  --mt-font-variant: normal;
+  --mt-font-weight: normal;
+
+  --vt-font-size: 15;
+  --vt-font-color: black;
+  --vt-font-opacity: 1;
+  --vt-font-family: sans-serif;
+  --vt-font-weight: bold;
+  --vt-font-variant: normal;
 }
 
 #gauge-bg-border {
@@ -53,10 +60,18 @@
 }
 
 .major-text {
-  font-family: var(--font-family);
-  font-variant: var(--font-variant);
-  font-weight: var(--font-weight);
-  font-size: var(--font-size);
-  color: var(--font-color);
-  opacity: var(--font-opacity);
+  font-family: var(--mt-font-family);
+  font-variant: var(--mt-font-variant);
+  font-weight: var(--mt-font-weight);
+  font-size: var(--mt-font-size);
+  fill: var(--mt-font-color);
+  opacity: var(--mt-font-opacity);
+}
+
+.value-text {
+  font-size: var(--vt-font-size);
+  font-family: var(--vt-font-family);
+  font-weight: var(--vt-font-weight);
+  fill: var(--vt-font-color);
+  opacity: var(--vt-font-opacity);
 }
