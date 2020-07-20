@@ -44,15 +44,33 @@ defmodule Examples.Gauge do
     Kernel.put_in(gauge.settings.text_value, "#{value}")
   end
 
-  defp put_gauge_value_half_circle(%__MODULE__{data: nil} = gauge) do
+  defp put_gauge_value_half_circle(
+         %__MODULE__{settings: %Settings{range: {a, _b}}, data: value} = gauge
+       )
+       when is_nil(value) or value < a do
     Kernel.put_in(gauge.settings.d_value, "")
   end
 
-  defp put_gauge_value_half_circle(%__MODULE__{settings: settings, data: value} = gauge) do
-    {cx, cy} = settings.gauge_center
-    {rx, ry} = settings.gauge_radius
+  defp put_gauge_value_half_circle(
+         %__MODULE__{
+           settings: %Settings{range: {_a, b}, gauge_center: {cx, cy}, gauge_radius: {rx, ry}},
+           data: value
+         } = gauge
+       )
+       when b < value do
+    Kernel.put_in(
+      gauge.settings.d_value,
+      "M#{cx - rx}, #{cy} A#{rx}, #{ry} 0 0,1 #{cx + rx}, #{cy}"
+    )
+  end
 
-    phi = Utils.value_to_angle(value, 0, 100)
+  defp put_gauge_value_half_circle(
+         %__MODULE__{
+           settings: %Settings{range: {a, b}, gauge_center: {cx, cy}, gauge_radius: {rx, ry}},
+           data: value
+         } = gauge
+       ) do
+    phi = Utils.value_to_angle(value, a, b)
 
     end_rx = :math.cos(phi) * rx
     end_ry = cy - :math.sin(phi) * ry
