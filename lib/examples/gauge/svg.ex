@@ -42,6 +42,7 @@ defmodule Examples.Gauge.Svg do
           d="<%= @settings.d_gauge_half_circle %>">
         </path>
         <path id="gauge-value"
+          <%= if String.length(@settings.d_value_color) != 0 do %> style="stroke: <%= @settings.d_value_color %>;" <% end %>
           d="<%= @settings.d_value %>">
         </path>
       </g>

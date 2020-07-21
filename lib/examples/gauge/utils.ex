@@ -17,6 +17,9 @@ defmodule Examples.Gauge.Utils do
     end)
   end
 
+  def is_in_interval?(val, [a, b]) when a <= val and val <= b, do: true
+  def is_in_interval?(_val, _interval), do: false
+
   def polar_to_cartesian(radius, phi) do
     {radius * :math.cos(phi), radius * :math.sin(phi)}
   end
