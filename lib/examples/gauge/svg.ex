@@ -24,6 +24,16 @@ defmodule Examples.Gauge.Svg do
         <% end %>
       </g>
 
+      <g class="major-ticks-text">
+        <%= for {x, y, tick_value, text_anchor} <- @settings.major_ticks_text.positions do %>
+          <text class="major-text"
+            x="<%= x %>" y="<%= y %>"
+            text-anchor="<%= text_anchor %>"
+            ><%= tick_value %>
+          </text>
+        <% end %>
+      </g>
+
       <g class="gauge">
         <path id="gauge-bg-border"
           d="<%= @settings.d_gauge_half_circle %>">
@@ -36,10 +46,10 @@ defmodule Examples.Gauge.Svg do
         </path>
       </g>
 
-      <text class="value-text"
+      <text class="value-font value-text"
         x="<%= elem(@settings.text_value_position, 0) %>" y = "<%= elem(@settings.text_value_position, 1) %>"
-        text-anchor="middle" alignment-baseline="middle" dominant-baseline="central">
-          <%= @settings.text_value %>
+        text-anchor="middle" alignment-baseline="middle" dominant-baseline="central"
+        ><%= @settings.text_value %>
       </text>
 
     </svg>

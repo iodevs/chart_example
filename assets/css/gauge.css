@@ -16,18 +16,20 @@
   --mjl-stroke-linecap: butt;
 }
 
-.text {
-  --mt-font-size: 10;
-  --mt-font-color: black;
-  --mt-font-opacity: 1;
-  --mt-font-family: sans-serif;
+.major-ticks-text {
+  --mt-font-size: 6px;
+  --mt-font-color: rgb(85, 58, 58);
+  --mt-font-opacity: 0.8;
+  --mt-font-family: "Open Sans", Verdana, Arial;
   --mt-font-variant: normal;
-  --mt-font-weight: normal;
+  --mt-font-weight: 600;
+}
 
-  --vt-font-size: 15;
+.value-font {
+  --vt-font-size: 18px;
   --vt-font-color: black;
-  --vt-font-opacity: 1;
-  --vt-font-family: sans-serif;
+  --vt-font-opacity: 0.75;
+  --vt-font-family: "Open Sans", Verdana, Arial;
   --vt-font-weight: bold;
   --vt-font-variant: normal;
 }
