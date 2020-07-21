@@ -41,7 +41,8 @@ defmodule Examples.Gauge do
   end
 
   defp put_value_as_text(%__MODULE__{data: value} = gauge) do
-    Kernel.put_in(gauge.settings.text_value, "#{value}")
+    rounded_val = :erlang.float_to_list(1.0 * value, decimals: gauge.settings.text_value_decimals)
+    Kernel.put_in(gauge.settings.text_value, rounded_val)
   end
 
   defp put_gauge_value_half_circle(

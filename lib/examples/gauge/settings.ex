@@ -46,6 +46,7 @@ defmodule Examples.Gauge.Settings do
           viewbox: nil | {pos_integer(), pos_integer()},
           range: nil | {number(), number()},
           text_value_position: nil | {number(), number()},
+          text_value_decimals: nil | non_neg_integer(),
           major_ticks: nil | MajorTicks.t(),
           major_ticks_text: nil | MajorTicksText.t(),
 
@@ -60,6 +61,7 @@ defmodule Examples.Gauge.Settings do
   defstruct viewbox: nil,
             range: nil,
             text_value_position: nil,
+            text_value_decimals: nil,
             major_ticks: nil,
             major_ticks_text: nil,
 
@@ -77,6 +79,7 @@ defmodule Examples.Gauge.Settings do
       range: key_guard(config, :range, {0, 300}, &set_range/1),
       text_value_position:
         key_guard(config, :text_value_position, {0, -5}, &set_text_value_position/1),
+      text_value_decimals: key_guard(config, :text_value_decimals, 0, &set_text_value_decimals/1),
       major_ticks:
         key_guard(
           config,
@@ -138,6 +141,10 @@ defmodule Examples.Gauge.Settings do
 
   defp set_text_value_position({x, y} = position) when is_number(x) and is_number(y) do
     position
+  end
+
+  defp set_text_value_decimals(decimals) when 0 <= decimals and is_integer(decimals) do
+    decimals
   end
 
   defp set_major_ticks_count(%MajorTicks{count: c} = major_ticks) when 1 < c and is_integer(c) do
