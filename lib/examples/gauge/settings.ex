@@ -45,6 +45,7 @@ defmodule Examples.Gauge.Settings do
   @type t() :: %__MODULE__{
           viewbox: nil | {pos_integer(), pos_integer()},
           range: nil | {number(), number()},
+          gauge_value_colors: nil | list(tuple()),
           text_value_position: nil | {number(), number()},
           text_value_decimals: nil | non_neg_integer(),
           major_ticks: nil | MajorTicks.t(),
@@ -55,11 +56,13 @@ defmodule Examples.Gauge.Settings do
           gauge_center: {number(), number()},
           d_gauge_half_circle: String.t(),
           d_value: String.t(),
+          d_value_color: String.t(),
           text_value: String.t()
         }
 
   defstruct viewbox: nil,
             range: nil,
+            gauge_value_colors: nil,
             text_value_position: nil,
             text_value_decimals: nil,
             major_ticks: nil,
@@ -70,6 +73,7 @@ defmodule Examples.Gauge.Settings do
             gauge_center: {0, 0},
             d_gauge_half_circle: "",
             d_value: "",
+            d_value_color: "",
             text_value: ""
 
   @spec set(list()) :: t()
@@ -77,8 +81,9 @@ defmodule Examples.Gauge.Settings do
     %__MODULE__{
       viewbox: key_guard(config, :viewbox, {160, 80}, &set_viewbox/1),
       range: key_guard(config, :range, {0, 300}, &set_range/1),
+      gauge_value_colors: key_guard(config, :gauge_value_colors, [], &set_gauge_value_colors/1),
       text_value_position:
-        key_guard(config, :text_value_position, {0, -5}, &set_text_value_position/1),
+        key_guard(config, :text_value_position, {0, -10}, &set_text_value_position/1),
       text_value_decimals: key_guard(config, :text_value_decimals, 0, &set_text_value_decimals/1),
       major_ticks:
         key_guard(
@@ -137,6 +142,13 @@ defmodule Examples.Gauge.Settings do
 
   defp set_range({min, max} = range) when min < max and is_number(min) and is_number(max) do
     range
+  end
+
+  defp set_gauge_value_colors([]), do: []
+
+  defp set_gauge_value_colors([tpl | tl] = val_colors)
+       when is_tuple(tpl) and is_list(tl) do
+    val_colors
   end
 
   defp set_text_value_position({x, y} = position) when is_number(x) and is_number(y) do
