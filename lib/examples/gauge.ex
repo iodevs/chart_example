@@ -31,19 +31,11 @@ defmodule Examples.Gauge do
     gauge
     |> put_gauge_value_half_circle()
     |> put_value_as_text()
+    |> put_color_value()
     |> Svg.generate()
   end
 
   # Private
-
-  defp put_value_as_text(%__MODULE__{data: nil} = gauge) do
-    Kernel.put_in(gauge.settings.text_value, "")
-  end
-
-  defp put_value_as_text(%__MODULE__{data: value} = gauge) do
-    rounded_val = :erlang.float_to_list(1.0 * value, decimals: gauge.settings.text_value_decimals)
-    Kernel.put_in(gauge.settings.text_value, rounded_val)
-  end
 
   defp put_gauge_value_half_circle(
          %__MODULE__{settings: %Settings{range: {a, _b}}, data: value} = gauge
@@ -80,5 +72,23 @@ defmodule Examples.Gauge do
       gauge.settings.d_value,
       "M#{cx - rx}, #{cy} A#{rx}, #{ry} 0 0,1 #{cx + end_rx}, #{end_ry}"
     )
+  end
+
+  defp put_value_as_text(%__MODULE__{data: nil} = gauge) do
+    Kernel.put_in(gauge.settings.text_value, "")
+  end
+
+  defp put_value_as_text(%__MODULE__{data: value} = gauge) do
+    rounded_val = :erlang.float_to_list(1.0 * value, decimals: gauge.settings.text_value_decimals)
+    Kernel.put_in(gauge.settings.text_value, rounded_val)
+  end
+
+  defp put_color_value(%__MODULE__{data: value} = gauge) do
+    val_colors =
+      gauge.settings.gauge_value_colors
+      |> Enum.find({[], ""}, fn {interval, _color} -> Utils.is_in_interval?(value, interval) end)
+      |> Kernel.elem(1)
+
+    Kernel.put_in(gauge.settings.d_value_color, val_colors)
   end
 end

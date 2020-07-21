@@ -6,12 +6,16 @@ defmodule ExamplesWeb.PageLive do
   def mount(_params, _session, socket) do
     generate_value()
 
-    {:ok, assign(socket, gauge: Gauge.setup([]))}
+    config = [
+      # gauge_value_colors: [{[0, 50], "orange"}, {[50, 250], "green"}, {[250, 300], "red"}],
+    ]
+
+    {:ok, assign(socket, gauge: Gauge.setup(config))}
   end
 
   @impl true
   def handle_info(:gen_val, socket) do
-    g = Gauge.put(socket.assigns.gauge, Enum.random(1..100))
+    g = Gauge.put(socket.assigns.gauge, Enum.random(0..300))
     generate_value()
 
     {:noreply, assign(socket, gauge: g)}
