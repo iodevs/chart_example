@@ -3,7 +3,8 @@ defmodule Examples.Gauge.Settings do
 
   alias Examples.Gauge.Utils
 
-  @from_bottom 35
+  @offset_from_bottom 35
+  @offset_radius_major_ticks_text 15
 
   defmodule MajorTicks do
     @moduledoc false
@@ -12,6 +13,8 @@ defmodule Examples.Gauge.Settings do
             count: pos_integer(),
             length: number(),
             gap: number(),
+
+            # Internal
             translate: String.t(),
             positions: list()
           }
@@ -23,11 +26,28 @@ defmodule Examples.Gauge.Settings do
               positions: []
   end
 
+  defmodule MajorTicksText do
+    @moduledoc false
+
+    @type t() :: %__MODULE__{
+            gap: number(),
+            decimals: non_neg_integer(),
+
+            # Internal
+            positions: list()
+          }
+
+    defstruct gap: 0,
+              decimals: 0,
+              positions: []
+  end
+
   @type t() :: %__MODULE__{
           viewbox: nil | {pos_integer(), pos_integer()},
           range: nil | {number(), number()},
           text_value_position: nil | {number(), number()},
           major_ticks: nil | MajorTicks.t(),
+          major_ticks_text: nil | MajorTicksText.t(),
 
           # Internal
           gauge_radius: {number(), number()},
@@ -35,13 +55,13 @@ defmodule Examples.Gauge.Settings do
           d_gauge_half_circle: String.t(),
           d_value: String.t(),
           text_value: String.t()
-          # text_ticks: nil | String.t(),
         }
 
   defstruct viewbox: nil,
             range: nil,
             text_value_position: nil,
             major_ticks: nil,
+            major_ticks_text: nil,
 
             # Internal
             gauge_radius: {50, 50},
@@ -49,8 +69,6 @@ defmodule Examples.Gauge.Settings do
             d_gauge_half_circle: "",
             d_value: "",
             text_value: ""
-
-  # text_ticks: nil,
 
   @spec set(list()) :: t()
   def set(config) do
@@ -79,6 +97,20 @@ defmodule Examples.Gauge.Settings do
           :major_ticks_gap,
           Map.put(%MajorTicks{}, :gap, 0),
           &set_major_ticks_gap/1
+        ),
+      major_ticks_text:
+        key_guard(
+          config,
+          :major_ticks_text_gap,
+          Map.put(%MajorTicksText{}, :gap, 0),
+          &set_major_ticks_text_gap/1
+        ),
+      major_ticks_text:
+        key_guard(
+          config,
+          :major_ticks_value_decimals,
+          Map.put(%MajorTicksText{}, :decimals, 0),
+          &set_major_ticks_text_decimals/1
         )
     }
     |> put_gauge_center_circle()
@@ -86,6 +118,7 @@ defmodule Examples.Gauge.Settings do
     |> put_text_value_position()
     |> put_major_ticks_translate()
     |> put_major_ticks_positions()
+    |> put_major_ticks_text_positions()
   end
 
   # Private
@@ -119,10 +152,19 @@ defmodule Examples.Gauge.Settings do
     major_ticks
   end
 
+  defp set_major_ticks_text_gap(%MajorTicksText{gap: g} = major_ticks_text) when is_number(g) do
+    major_ticks_text
+  end
+
+  defp set_major_ticks_text_decimals(%MajorTicksText{decimals: d} = major_ticks_value)
+       when 0 <= d and is_integer(d) do
+    major_ticks_value
+  end
+
   defp put_gauge_center_circle(%__MODULE__{viewbox: {w, h}} = settings) do
     %{
       settings
-      | gauge_center: {w / 2, h / 2 + @from_bottom}
+      | gauge_center: {w / 2, h / 2 + @offset_from_bottom}
     }
   end
 
@@ -154,5 +196,50 @@ defmodule Examples.Gauge.Settings do
     angles = Utils.linspace(0, 180, settings.major_ticks.count)
 
     Kernel.put_in(settings.major_ticks.positions, angles)
+  end
+
+  defp put_major_ticks_text_positions(settings) do
+    count = settings.major_ticks.count
+
+    ticks_text_pos =
+      settings.range
+      |> Utils.linspace(count)
+      |> Utils.split_major_tick_values(count)
+      |> parse_tick_values(settings)
+
+    Kernel.put_in(settings.major_ticks_text.positions, ticks_text_pos)
+  end
+
+  defp parse_tick_values([left, center, right], settings)
+       when is_list(left) and is_list(center) and is_list(right) do
+    l = left |> compute_positions_with_text_anchor(settings, "end")
+    c = center |> compute_positions_with_text_anchor(settings, "middle")
+    r = right |> compute_positions_with_text_anchor(settings, "start")
+
+    [l, c, r] |> List.flatten()
+  end
+
+  defp parse_tick_values([left, right], settings) when is_list(left) and is_list(right) do
+    l = left |> compute_positions_with_text_anchor(settings, "end")
+    r = right |> compute_positions_with_text_anchor(settings, "start")
+
+    [l, r] |> List.flatten()
+  end
+
+  defp compute_positions_with_text_anchor(val_list, settings, text_anchor) do
+    {cx, cy} = settings.gauge_center
+    {rx, _ry} = settings.gauge_radius
+
+    radius = rx + @offset_radius_major_ticks_text + settings.major_ticks_text.gap
+
+    val_list
+    |> Enum.map(fn tick_val ->
+      phi = Utils.value_to_angle(tick_val, settings.range)
+      {x, y} = Utils.polar_to_cartesian(radius, phi)
+
+      {cx + x, cy - y,
+       :erlang.float_to_list(1.0 * tick_val, decimals: settings.major_ticks_text.decimals),
+       text_anchor}
+    end)
   end
 end
