@@ -55,6 +55,7 @@ defmodule Examples.Gauge.Settings do
   end
 
   @type t() :: %__MODULE__{
+          gauge_bottom_width_lines: nil | number(),
           gauge_value_colors: nil | list(tuple()),
           major_ticks: nil | MajorTicks.t(),
           major_ticks_text: nil | MajorTicksText.t(),
@@ -63,6 +64,7 @@ defmodule Examples.Gauge.Settings do
           viewbox: nil | {pos_integer(), pos_integer()},
 
           # Internal
+          d_gauge_bg_border_bottom_lines: list(String.t()),
           d_gauge_half_circle: String.t(),
           d_value: String.t(),
           d_value_color: String.t(),
@@ -71,7 +73,8 @@ defmodule Examples.Gauge.Settings do
           text_value: String.t()
         }
 
-  defstruct gauge_value_colors: nil,
+  defstruct gauge_bottom_width_lines: nil,
+            gauge_value_colors: nil,
             major_ticks: nil,
             major_ticks_text: nil,
             range: nil,
@@ -79,6 +82,7 @@ defmodule Examples.Gauge.Settings do
             viewbox: nil,
 
             # Internal
+            d_gauge_bg_border_bottom_lines: ["", ""],
             gauge_radius: {50, 50},
             gauge_center: {0, 0},
             d_gauge_half_circle: "",
@@ -89,10 +93,12 @@ defmodule Examples.Gauge.Settings do
   @spec set(list()) :: t()
   def set(config) do
     %__MODULE__{
-      viewbox: key_guard(config, :viewbox, {160, 80}, &validate_viewbox/1),
-      range: key_guard(config, :range, {0, 300}, &validate_range/1),
+      gauge_bottom_width_lines:
+        key_guard(config, :gauge_bottom_width_lines, 1.25, &validate_gauge_bottom_width_lines/1),
       gauge_value_colors:
-        key_guard(config, :gauge_value_colors, [], &validate_gauge_value_colors/1)
+        key_guard(config, :gauge_value_colors, [], &validate_gauge_value_colors/1),
+      range: key_guard(config, :range, {0, 300}, &validate_range/1),
+      viewbox: key_guard(config, :viewbox, {160, 80}, &validate_viewbox/1)
     }
     |> set_gauge_center_circle()
     |> set_gauge_half_circle()
@@ -109,6 +115,7 @@ defmodule Examples.Gauge.Settings do
       decimals: key_guard(config, :value_text_decimals, 0, &validate_decimals/1),
       position: key_guard(config, :value_text_position, {0, -10}, &validate_value_text_position/1)
     )
+    |> set_gauge_bg_border_bottom_lines()
   end
 
   # Private
@@ -156,6 +163,20 @@ defmodule Examples.Gauge.Settings do
     )
   end
 
+  defp set_gauge_bg_border_bottom_lines(
+         %__MODULE__{gauge_center: {cx, cy}, gauge_radius: {rx, _ry}} = settings
+       ) do
+    width = settings.gauge_bottom_width_lines
+
+    Kernel.put_in(
+      settings.d_gauge_bg_border_bottom_lines,
+      [
+        "M#{cx - rx}, #{cy - 0.5} l0, #{width}",
+        "M#{cx + rx}, #{cy - 0.5} l0, #{width}"
+      ]
+    )
+  end
+
   defp set_major_ticks_translate(major_ticks, {_cx, cy}) do
     Map.put(major_ticks, :translate, "translate(#{16.5 - major_ticks.gap}, #{cy})")
   end
@@ -185,14 +206,16 @@ defmodule Examples.Gauge.Settings do
   end
 
   #  Validators
-
-  defp validate_viewbox({width, height} = viewbox)
-       when 0 < width and 0 < height and is_number(width) and is_number(height) do
-    viewbox
+  defp validate_decimals(decimals) when 0 <= decimals and is_integer(decimals) do
+    decimals
   end
 
-  defp validate_range({min, max} = range) when min < max and is_number(min) and is_number(max) do
-    range
+  defp validate_gap(gap) when is_number(gap) do
+    gap
+  end
+
+  defp validate_gauge_bottom_width_lines(width) when is_number(width) do
+    width
   end
 
   defp validate_gauge_value_colors([]), do: []
@@ -214,12 +237,13 @@ defmodule Examples.Gauge.Settings do
     length
   end
 
-  defp validate_decimals(decimals) when 0 <= decimals and is_integer(decimals) do
-    decimals
+  defp validate_range({min, max} = range) when min < max and is_number(min) and is_number(max) do
+    range
   end
 
-  defp validate_gap(gap) when is_number(gap) do
-    gap
+  defp validate_viewbox({width, height} = viewbox)
+       when 0 < width and 0 < height and is_number(width) and is_number(height) do
+    viewbox
   end
 
   # Helpers
