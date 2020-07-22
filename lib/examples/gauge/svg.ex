@@ -48,7 +48,7 @@ defmodule Examples.Gauge.Svg do
       </g>
 
       <text class="value-font value-text"
-        x="<%= elem(@settings.text_value_position, 0) %>" y = "<%= elem(@settings.text_value_position, 1) %>"
+        x="<%= elem(@settings.value_text.position, 0) %>" y = "<%= elem(@settings.value_text.position, 1) %>"
         text-anchor="middle" alignment-baseline="middle" dominant-baseline="central"
         ><%= @settings.text_value %>
       </text>
