@@ -64,13 +64,11 @@ defmodule Examples.Gauge do
          } = gauge
        ) do
     phi = Utils.value_to_angle(value, a, b)
-
-    end_rx = :math.cos(phi) * rx
-    end_ry = cy - :math.sin(phi) * ry
+    {end_rx, end_ry} = Utils.polar_to_cartesian(rx, phi)
 
     Kernel.put_in(
       gauge.settings.d_value,
-      "M#{cx - rx}, #{cy} A#{rx}, #{ry} 0 0,1 #{cx + end_rx}, #{end_ry}"
+      "M#{cx - rx}, #{cy} A#{rx}, #{ry} 0 0,1 #{cx + end_rx}, #{cy - end_ry}"
     )
   end
 
@@ -79,7 +77,8 @@ defmodule Examples.Gauge do
   end
 
   defp put_value_as_text(%__MODULE__{data: value} = gauge) do
-    rounded_val = :erlang.float_to_list(1.0 * value, decimals: gauge.settings.text_value_decimals)
+    rounded_val = :erlang.float_to_list(1.0 * value, decimals: gauge.settings.value_text.decimals)
+
     Kernel.put_in(gauge.settings.text_value, rounded_val)
   end
 
