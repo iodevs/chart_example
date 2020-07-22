@@ -41,6 +41,13 @@
   fill: none;
 }
 
+.gauge-bg-border-bottom-lines {
+  stroke-width: var(--gauge-bg-border-width);
+  stroke: var(--gauge-bg-border-color);
+  stroke-opacity: var(--gauge-bg-border-opacity);
+  fill: none;
+}
+
 #gauge-bg {
   stroke-width: var(--gauge-bg-width);
   stroke: var(--gauge-bg-width-color);

@@ -35,9 +35,16 @@ defmodule Examples.Gauge.Svg do
       </g>
 
       <g class="gauge">
-        <path id="gauge-bg-border"
-          d="<%= @settings.d_gauge_half_circle %>">
-        </path>
+        <g class="gauge-bg-border-bottom-lines">
+          <path id="gauge-bg-border"
+            d="<%= @settings.d_gauge_half_circle %>">
+          </path>
+          <%= for lines <- @settings.d_gauge_bg_border_bottom_lines do %>
+            <path class="gauge-bg-border-bottom-lines"
+              d="<%= lines %>">
+            </path>
+          <% end %>
+        </g>
         <path id="gauge-bg"
           d="<%= @settings.d_gauge_half_circle %>">
         </path>
