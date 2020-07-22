@@ -8,7 +8,8 @@ defmodule ExamplesWeb.PageLive do
 
     config = [
       # gauge_value_colors: [{[0, 50], "orange"}, {[50, 250], "green"}, {[250, 300], "red"}],
-      major_ticks_count: 7
+      major_ticks_count: 7,
+      tresholds: [{50, "treshold_low"}, {250, "treshold_high"}]
     ]
 
     {:ok, assign(socket, gauge: Gauge.setup(config))}
