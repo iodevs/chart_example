@@ -90,8 +90,6 @@ defmodule ExamplesWeb do
       import ExamplesWeb.ErrorHelpers
       import ExamplesWeb.Gettext
       alias ExamplesWeb.Router.Helpers, as: Routes
-
-      alias Examples.Gauge.Svg, as: Gauge
     end
   end
 
