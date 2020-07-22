@@ -54,18 +54,32 @@ defmodule Examples.Gauge.Settings do
               position: nil
   end
 
+  defmodule Tresholds do
+    @moduledoc false
+
+    @type t() :: %__MODULE__{
+            positions_with_class_name: nil | list(tuple()),
+            width: nil | non_neg_integer()
+          }
+
+    defstruct positions_with_class_name: nil,
+              width: nil
+  end
+
   @type t() :: %__MODULE__{
           gauge_bottom_width_lines: nil | number(),
           gauge_value_colors: nil | list(tuple()),
           major_ticks: nil | MajorTicks.t(),
           major_ticks_text: nil | MajorTicksText.t(),
           range: nil | {number(), number()},
+          tresholds: nil | Tresholds.t(),
           value_text: nil | ValueText.t(),
           viewbox: nil | {pos_integer(), pos_integer()},
 
           # Internal
           d_gauge_bg_border_bottom_lines: list(String.t()),
           d_gauge_half_circle: String.t(),
+          d_tresholds_with_class: list(tuple()),
           d_value: String.t(),
           d_value_color: String.t(),
           gauge_radius: {number(), number()},
@@ -78,6 +92,7 @@ defmodule Examples.Gauge.Settings do
             major_ticks: nil,
             major_ticks_text: nil,
             range: nil,
+            tresholds: nil,
             value_text: nil,
             viewbox: nil,
 
@@ -86,6 +101,7 @@ defmodule Examples.Gauge.Settings do
             gauge_radius: {50, 50},
             gauge_center: {0, 0},
             d_gauge_half_circle: "",
+            d_tresholds_with_class: [{"", ""}],
             d_value: "",
             d_value_color: "",
             text_value: ""
@@ -94,28 +110,31 @@ defmodule Examples.Gauge.Settings do
   def set(config) do
     %__MODULE__{
       gauge_bottom_width_lines:
-        key_guard(config, :gauge_bottom_width_lines, 1.25, &validate_gauge_bottom_width_lines/1),
-      gauge_value_colors:
-        key_guard(config, :gauge_value_colors, [], &validate_gauge_value_colors/1),
+        key_guard(config, :gauge_bottom_width_lines, 1.25, &validate_number/1),
+      gauge_value_colors: key_guard(config, :gauge_value_colors, [], &validate_list_of_tuples/1),
       range: key_guard(config, :range, {0, 300}, &validate_range/1),
       viewbox: key_guard(config, :viewbox, {160, 80}, &validate_viewbox/1)
     }
     |> set_gauge_center_circle()
     |> set_gauge_half_circle()
+    |> set_gauge_bg_border_bottom_lines()
     |> put_major_ticks(
       count: key_guard(config, :major_ticks_count, 7, &validate_major_ticks_count/1),
-      gap: key_guard(config, :major_ticks_gap, 0, &validate_gap/1),
-      length: key_guard(config, :major_ticks_length, 7, &validate_major_ticks_length/1)
+      gap: key_guard(config, :major_ticks_gap, 0, &validate_number/1),
+      length: key_guard(config, :major_ticks_length, 7, &validate_positive_number/1)
     )
     |> put_major_ticks_text(
       decimals: key_guard(config, :major_ticks_value_decimals, 0, &validate_decimals/1),
-      gap: key_guard(config, :major_ticks_text_gap, 0, &validate_gap/1)
+      gap: key_guard(config, :major_ticks_text_gap, 0, &validate_number/1)
     )
     |> put_value_text(
       decimals: key_guard(config, :value_text_decimals, 0, &validate_decimals/1),
       position: key_guard(config, :value_text_position, {0, -10}, &validate_value_text_position/1)
     )
-    |> set_gauge_bg_border_bottom_lines()
+    |> put_tresholds(
+      positions_with_class_name: key_guard(config, :tresholds, [], &validate_list_of_tuples/1),
+      width: key_guard(config, :treshold_width, 1, &validate_positive_number/1)
+    )
   end
 
   # Private
@@ -146,6 +165,15 @@ defmodule Examples.Gauge.Settings do
       |> set_value_text_position(settings.gauge_center)
 
     Kernel.put_in(settings.value_text, value_text)
+  end
+
+  defp put_tresholds(%__MODULE__{} = settings, keywords) do
+    tresholds =
+      keywords
+      |> set_map(%Tresholds{})
+      |> set_tresholds(settings)
+
+    Kernel.put_in(settings.tresholds, tresholds)
   end
 
   # Setters for map keys
@@ -199,6 +227,23 @@ defmodule Examples.Gauge.Settings do
     Map.put(major_ticks_text, :positions, ticks_text_pos)
   end
 
+  defp set_tresholds(tresholds, settings) do
+    {cx, cy} = settings.gauge_center
+    {rx, _ry} = settings.gauge_radius
+
+    d_tresholds_with_class =
+      tresholds.positions_with_class_name
+      |> Enum.map(fn {val, class} ->
+        phi = Utils.value_to_angle(val, settings.range)
+        {x, y} = Utils.polar_to_cartesian(rx, phi)
+
+        # {"M30.0, 74.5 l0, 1.25", class}
+        {"M#{cx + x}, #{cy - y} l0, #{tresholds.width}", class}
+      end)
+
+    Map.put(tresholds, :d_tresholds_with_class, d_tresholds_with_class)
+  end
+
   defp set_value_text_position(value_text, {cx, cy}) do
     {x, y} = value_text.position
 
@@ -210,17 +255,13 @@ defmodule Examples.Gauge.Settings do
     decimals
   end
 
-  defp validate_gap(gap) when is_number(gap) do
-    gap
+  defp validate_number(number) when is_number(number) do
+    number
   end
 
-  defp validate_gauge_bottom_width_lines(width) when is_number(width) do
-    width
-  end
+  defp validate_list_of_tuples([]), do: []
 
-  defp validate_gauge_value_colors([]), do: []
-
-  defp validate_gauge_value_colors([tpl | tl] = val_colors)
+  defp validate_list_of_tuples([tpl | tl] = val_colors)
        when is_tuple(tpl) and is_list(tl) do
     val_colors
   end
@@ -233,12 +274,12 @@ defmodule Examples.Gauge.Settings do
     count
   end
 
-  defp validate_major_ticks_length(length) when 0 < length and is_number(length) do
-    length
-  end
-
   defp validate_range({min, max} = range) when min < max and is_number(min) and is_number(max) do
     range
+  end
+
+  defp validate_positive_number(number) when 0 < number and is_number(number) do
+    number
   end
 
   defp validate_viewbox({width, height} = viewbox)

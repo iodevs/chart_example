@@ -54,6 +54,14 @@ defmodule Examples.Gauge.Svg do
         </path>
       </g>
 
+      <g class="tresholds">
+        <%= for {treshold, class} <- @settings.tresholds.d_tresholds_with_class do %>
+          <path class="<%= class %>"
+            d="<%= treshold %>">
+          </path>
+        <% end %>
+      </g>
+
       <text class="value-font value-text"
         x="<%= elem(@settings.value_text.position, 0) %>" y = "<%= elem(@settings.value_text.position, 1) %>"
         text-anchor="middle" alignment-baseline="middle" dominant-baseline="central"
