@@ -54,14 +54,16 @@ defmodule Examples.Gauge.Svg do
         </path>
       </g>
 
-      <g class="thresholds">
-        <%= for {treshold, angle, class} <- @settings.thresholds.d_thresholds_with_class do %>
-          <path class="<%= class %>"
-            d="<%= treshold %>"
-            transform="rotate(<%= angle %>, <%= elem(@settings.gauge_center, 0) %>, <%= elem(@settings.gauge_center, 1) %>)">
-          </path>
-        <% end %>
-      </g>
+      <%= if !Enum.empty?(@settings.thresholds.positions_with_class_name) do %>
+        <g class="thresholds">
+          <%= for {treshold, angle, class} <- @settings.thresholds.d_thresholds_with_class do %>
+            <path class="<%= class %>"
+              d="<%= treshold %>"
+              transform="rotate(<%= angle %>, <%= elem(@settings.gauge_center, 0) %>, <%= elem(@settings.gauge_center, 1) %>)">
+            </path>
+          <% end %>
+        </g>
+      <% end %>
 
       <text class="value-font value-text"
         x="<%= elem(@settings.value_text.position, 0) %>" y = "<%= elem(@settings.value_text.position, 1) %>"
