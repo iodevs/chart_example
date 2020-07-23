@@ -7,7 +7,7 @@ defmodule ExamplesWeb.PageLive do
     generate_value()
 
     config = [
-      # gauge_value_colors: [
+      # gauge_value_class: [
       #   {[0, 50], "gauge-value-warning"},
       #   {[50, 250], "gauge-value-normal"},
       #   {[250, 300], "gauge-value-critical"}

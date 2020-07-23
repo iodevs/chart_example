@@ -2,7 +2,7 @@
 @import "./phoenix.css";
 @import "../node_modules/nprogress/nprogress.css";
 
-@import "gauge.css";
+@import "../../../chart/priv/static/css/gauge.css";
 
 /* LiveView specific classes for your customizations */
 .invalid-feedback {
