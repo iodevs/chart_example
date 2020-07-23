@@ -83,11 +83,11 @@ defmodule Examples.Gauge do
   end
 
   defp put_color_value(%__MODULE__{data: value} = gauge) do
-    val_colors =
+    class =
       gauge.settings.gauge_value_colors
-      |> Enum.find({[], ""}, fn {interval, _color} -> Utils.is_in_interval?(value, interval) end)
+      |> Enum.find({[], ""}, fn {interval, _class} -> Utils.is_in_interval?(value, interval) end)
       |> Kernel.elem(1)
 
-    Kernel.put_in(gauge.settings.d_value_color, val_colors)
+    Kernel.put_in(gauge.settings.gauge_value_class, class)
   end
 end
