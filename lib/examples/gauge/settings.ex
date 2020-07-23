@@ -84,9 +84,9 @@ defmodule Examples.Gauge.Settings do
           d_gauge_bg_border_bottom_lines: list(String.t()),
           d_gauge_half_circle: String.t(),
           d_value: String.t(),
-          d_value_color: String.t(),
-          gauge_radius: {number(), number()},
           gauge_center: {number(), number()},
+          gauge_radius: {number(), number()},
+          gauge_value_class: String.t(),
           text_value: String.t()
         }
 
@@ -101,11 +101,11 @@ defmodule Examples.Gauge.Settings do
 
             # Internal
             d_gauge_bg_border_bottom_lines: ["", ""],
-            gauge_radius: {50, 50},
-            gauge_center: {0, 0},
             d_gauge_half_circle: "",
             d_value: "",
-            d_value_color: "",
+            gauge_center: {0, 0},
+            gauge_radius: {50, 50},
+            gauge_value_class: "",
             text_value: ""
 
   @spec set(list()) :: t()

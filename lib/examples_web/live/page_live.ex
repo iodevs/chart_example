@@ -7,7 +7,11 @@ defmodule ExamplesWeb.PageLive do
     generate_value()
 
     config = [
-      # gauge_value_colors: [{[0, 50], "orange"}, {[50, 250], "green"}, {[250, 300], "red"}],
+      # gauge_value_colors: [
+      #   {[0, 50], "gauge-value-warning"},
+      #   {[50, 250], "gauge-value-normal"},
+      #   {[250, 300], "gauge-value-critical"}
+      # ],
       major_ticks_count: 7,
       thresholds: [{50, "treshold_low"}, {250, "treshold_high"}]
     ]
