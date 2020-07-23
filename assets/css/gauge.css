@@ -34,16 +34,16 @@
   --vt-font-variant: normal;
 }
 
-.tresholds {
-  --tresholds-low-stroke: #db891e;
-  --tresholds-low-stroke-width: 14;
-  --tresholds-low-stroke-linecap: butt;
-  --tresholds-low-opacity: 1;
+.thresholds {
+  --thresholds-low-stroke: #db891e;
+  --thresholds-low-stroke-width: 14;
+  --thresholds-low-stroke-linecap: butt;
+  --thresholds-low-opacity: 1;
 
-  --tresholds-high-stroke: #db1e2e;
-  --tresholds-high-stroke-width: 14;
-  --tresholds-high-stroke-linecap: butt;
-  --tresholds-high-opacity: 1;
+  --thresholds-high-stroke: #db1e2e;
+  --thresholds-high-stroke-width: 14;
+  --thresholds-high-stroke-linecap: butt;
+  --thresholds-high-opacity: 1;
 }
 
 #gauge-bg-border {
@@ -98,17 +98,17 @@
 }
 
 .treshold_low {
-  stroke: var(--tresholds-low-stroke);
-  stroke-width: var(--tresholds-low-stroke-width);
-  stroke-linecap: var(--tresholds-low-stroke-linecap);
-  stroke-opacity: var(--tresholds-low-opacity);
+  stroke: var(--thresholds-low-stroke);
+  stroke-width: var(--thresholds-low-stroke-width);
+  stroke-linecap: var(--thresholds-low-stroke-linecap);
+  stroke-opacity: var(--thresholds-low-opacity);
   fill: none;
 }
 
 .treshold_high {
-  stroke: var(--tresholds-high-stroke);
-  stroke-width: var(--tresholds-high-stroke-width);
-  stroke-linecap: var(--tresholds-high-stroke-linecap);
-  stroke-opacity: var(--tresholds-high-opacity);
+  stroke: var(--thresholds-high-stroke);
+  stroke-width: var(--thresholds-high-stroke-width);
+  stroke-linecap: var(--thresholds-high-stroke-linecap);
+  stroke-opacity: var(--thresholds-high-opacity);
   fill: none;
 }

@@ -54,16 +54,20 @@ defmodule Examples.Gauge.Settings do
               position: nil
   end
 
-  defmodule Tresholds do
+  defmodule Thresholds do
     @moduledoc false
 
     @type t() :: %__MODULE__{
             positions_with_class_name: nil | list(tuple()),
-            width: nil | non_neg_integer()
+            width: nil | non_neg_integer(),
+
+            # Internal
+            d_thresholds_with_class: list(tuple())
           }
 
     defstruct positions_with_class_name: nil,
-              width: nil
+              width: nil,
+              d_thresholds_with_class: [{"", "", ""}]
   end
 
   @type t() :: %__MODULE__{
@@ -72,14 +76,13 @@ defmodule Examples.Gauge.Settings do
           major_ticks: nil | MajorTicks.t(),
           major_ticks_text: nil | MajorTicksText.t(),
           range: nil | {number(), number()},
-          tresholds: nil | Tresholds.t(),
+          thresholds: nil | Thresholds.t(),
           value_text: nil | ValueText.t(),
           viewbox: nil | {pos_integer(), pos_integer()},
 
           # Internal
           d_gauge_bg_border_bottom_lines: list(String.t()),
           d_gauge_half_circle: String.t(),
-          d_tresholds_with_class: list(tuple()),
           d_value: String.t(),
           d_value_color: String.t(),
           gauge_radius: {number(), number()},
@@ -92,7 +95,7 @@ defmodule Examples.Gauge.Settings do
             major_ticks: nil,
             major_ticks_text: nil,
             range: nil,
-            tresholds: nil,
+            thresholds: nil,
             value_text: nil,
             viewbox: nil,
 
@@ -101,7 +104,6 @@ defmodule Examples.Gauge.Settings do
             gauge_radius: {50, 50},
             gauge_center: {0, 0},
             d_gauge_half_circle: "",
-            d_tresholds_with_class: [{"", ""}],
             d_value: "",
             d_value_color: "",
             text_value: ""
@@ -131,8 +133,8 @@ defmodule Examples.Gauge.Settings do
       decimals: key_guard(config, :value_text_decimals, 0, &validate_decimals/1),
       position: key_guard(config, :value_text_position, {0, -10}, &validate_value_text_position/1)
     )
-    |> put_tresholds(
-      positions_with_class_name: key_guard(config, :tresholds, [], &validate_list_of_tuples/1),
+    |> put_thresholds(
+      positions_with_class_name: key_guard(config, :thresholds, [], &validate_list_of_tuples/1),
       width: key_guard(config, :treshold_width, 1, &validate_positive_number/1)
     )
   end
@@ -167,13 +169,13 @@ defmodule Examples.Gauge.Settings do
     Kernel.put_in(settings.value_text, value_text)
   end
 
-  defp put_tresholds(%__MODULE__{} = settings, keywords) do
-    tresholds =
+  defp put_thresholds(%__MODULE__{} = settings, keywords) do
+    thresholds =
       keywords
-      |> set_map(%Tresholds{})
-      |> set_tresholds(settings)
+      |> set_map(%Thresholds{})
+      |> set_thresholds(settings)
 
-    Kernel.put_in(settings.tresholds, tresholds)
+    Kernel.put_in(settings.thresholds, thresholds)
   end
 
   # Setters for map keys
@@ -227,21 +229,21 @@ defmodule Examples.Gauge.Settings do
     Map.put(major_ticks_text, :positions, ticks_text_pos)
   end
 
-  defp set_tresholds(tresholds, settings) do
+  defp set_thresholds(thresholds, settings) do
     {cx, cy} = settings.gauge_center
     {rx, _ry} = settings.gauge_radius
+    width = thresholds.width
 
-    d_tresholds_with_class =
-      tresholds.positions_with_class_name
+    d_thresholds_with_class =
+      thresholds.positions_with_class_name
       |> Enum.map(fn {val, class} ->
         phi = Utils.value_to_angle(val, settings.range)
-        {x, y} = Utils.polar_to_cartesian(rx, phi)
+        angle = 180.0 - Utils.radian_to_degree(phi) + width / 2.0
 
-        # {"M30.0, 74.5 l0, 1.25", class}
-        {"M#{cx + x}, #{cy - y} l0, #{tresholds.width}", class}
+        {"M#{cx - rx}, #{cy} l0, #{width}", angle, class}
       end)
 
-    Map.put(tresholds, :d_tresholds_with_class, d_tresholds_with_class)
+    Map.put(thresholds, :d_thresholds_with_class, d_thresholds_with_class)
   end
 
   defp set_value_text_position(value_text, {cx, cy}) do
