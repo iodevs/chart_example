@@ -1,6 +1,6 @@
 defmodule ExamplesWeb.PageLive do
   use ExamplesWeb, :live_view
-  alias Grafex.Gauge
+  alias Chart.Gauge
 
   @impl true
   def mount(_params, _session, socket) do

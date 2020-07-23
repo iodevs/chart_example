@@ -44,16 +44,16 @@ defmodule Examples.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      grafex_lib(Mix.env(), "v0.1.0")
+      chart_lib(Mix.env(), "v0.1.0")
     ]
   end
 
-  defp grafex_lib(:dev, _tag) do
-    {:grafex, path: "../grafex", override: true}
+  defp chart_lib(:dev, _tag) do
+    {:chart, path: "../chart", override: true}
   end
 
-  defp grafex_lib(_, tag) do
-    {:grafex, "~> #{tag}"}
+  defp chart_lib(_, tag) do
+    {:chart, "~> #{tag}"}
   end
 
   # Aliases are shortcuts or tasks specific to the current project.
