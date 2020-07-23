@@ -24,6 +24,10 @@ defmodule Examples.Gauge.Utils do
     {radius * :math.cos(phi), radius * :math.sin(phi)}
   end
 
+  def radian_to_degree(rad) do
+    rad * 180 / :math.pi()
+  end
+
   def split_major_tick_values([l, r], 2) do
     [[l], [r]]
   end
