@@ -6,8 +6,11 @@
   --gauge-bg-width-color: #dfe6e9;
   --gauge-bg-width-opacity: 0.5;
   --gauge-value-width: 10;
-  --gauge-value-bg-color: #6c5ce7;
-  --gauge-value-bg-opacity: 0.75;
+  --gauge-value-color-default: #6c5ce7;
+  --gauge-value-color-warning: orange;
+  --gauge-value-color-normal: green;
+  --gauge-value-color-critical: red;
+  --gauge-value-opacity: 0.75;
 }
 
 .major-ticks {
@@ -69,8 +72,29 @@
 
 #gauge-value {
   stroke-width: var(--gauge-value-width);
-  stroke: var(--gauge-value-bg-color);
-  stroke-opacity: var(--gauge-value-bg-opacity);
+  stroke: var(--gauge-value-color-default);
+  stroke-opacity: var(--gauge-value-opacity);
+  fill: none;
+}
+
+.gauge-value-warning {
+  stroke-width: var(--gauge-value-width);
+  stroke: var(--gauge-value-color-warning) !important;
+  stroke-opacity: var(--gauge-value-opacity);
+  fill: none;
+}
+
+.gauge-value-normal {
+  stroke-width: var(--gauge-value-width);
+  stroke: var(--gauge-value-color-normal) !important;
+  stroke-opacity: var(--gauge-value-opacity);
+  fill: none;
+}
+
+.gauge-value-critical {
+  stroke-width: var(--gauge-value-width);
+  stroke: var(--gauge-value-color-critical) !important;
+  stroke-opacity: var(--gauge-value-opacity);
   fill: none;
 }
 
