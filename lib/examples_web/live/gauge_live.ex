@@ -1,4 +1,4 @@
-defmodule ExamplesWeb.PageLive do
+defmodule ExamplesWeb.GaugeLive do
   use ExamplesWeb, :live_view
   alias Chart.Gauge
 
@@ -29,9 +29,9 @@ defmodule ExamplesWeb.PageLive do
 
   @impl true
   def render(assigns) do
-    assigns = [gauge_graph: Gauge.render(assigns.gauge)]
+    assigns = [graph: Gauge.render(assigns.gauge)]
 
-    Phoenix.View.render(ExamplesWeb.PageView, "page_live.html", assigns)
+    Phoenix.View.render(ExamplesWeb.PageView, "gauge_live.html", assigns)
   end
 
   # Private
