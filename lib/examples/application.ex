@@ -10,7 +10,7 @@ defmodule Examples.Application do
       # Start the Telemetry supervisor
       ExamplesWeb.Telemetry,
       # Start the PubSub system
-      {Phoenix.PubSub, name: Examples.PubSub},
+      {Phoenix.PubSub, [name: Examples.PubSub, adapter: Phoenix.PubSub.PG2]},
       # Start the Endpoint (http/https)
       ExamplesWeb.Endpoint
       # Start a worker by calling: Examples.Worker.start_link(arg)
