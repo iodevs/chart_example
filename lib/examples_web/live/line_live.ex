@@ -10,26 +10,19 @@ defmodule ExamplesWeb.LineLive do
     # data = [[{1, 2}, {1.5, 5}, {2.2, 3.4}, {3, 3}]]
     # data = [[{1, 2}, {2, 5}, {3, 3.4}, {8, 3}]]
 
-    data = [
-      [{1, 2}, {1.5, 5}, {2.2, 3.4}, {3, 3}],
-      [{0.3, 0.2}, {3.5, 6.5}, {5, 3.4}, {8, 3}]
-      # [{1.8, 2.4}, {7.2, 2.4}]
-    ]
+    # data = [
+    #   [{1, 2}, {1.5, 5}, {2.2, 3.4}, {3, 3}],
+    #   [{0.3, 0.2}, {3.5, 6.5}, {5, 3.4}, {8, 3}]
+    #   # [{1.8, 2.4}, {7.2, 2.4}]
+    # ]
 
-    {:ok, assign(socket, line: line_setup() |> Line.put(data))}
+    {:ok, assign(socket, line: line_setup())}
   end
 
   @impl true
-  def handle_info(:gen_val, socket) do
-    g = Line.put(socket.assigns.line, Enum.random(0..300))
-    # generate_value()
-
-    {:noreply, assign(socket, line: g)}
-  end
-
-  def handle_info({:gen, num}, socket) do
+  def handle_info({:gen, x}, socket) do
     # PubSub.broadcast(Examples.PubSub, "line_chart", {:gen, 23})
-    data = [[{num, Enum.random(0..10)}], [{num, Enum.random(-10..10)}]]
+    data = [[{x, Enum.random(0..10)}], [{x, Enum.random(-10..10)}]]
     g = Line.put(socket.assigns.line, data)
 
     {:noreply, assign(socket, line: g)}
@@ -44,10 +37,6 @@ defmodule ExamplesWeb.LineLive do
 
   # Private
 
-  defp generate_value() do
-    Process.send_after(self(), :gen_val, 1_000)
-  end
-
   defp line_setup() do
     Line.setup()
     |> Line.set_title_text("Graph")
@@ -56,8 +45,8 @@ defmodule ExamplesWeb.LineLive do
     |> Line.set_grid(:y_major)
     |> Line.set_axis_label(:x_axis, "Axis X")
     |> Line.set_axis_label(:y_axis, "Axis Y")
-    # |> Line.set_axis_major_ticks_count(:x_axis, 5)
-    # |> Line.set_axis_ticks_text_format(:x_axis, {:datetime, "%X"})
+    |> Line.set_axis_major_ticks_count(:x_axis, 5)
+    |> Line.set_axis_ticks_text_format(:x_axis, {:datetime, "%X"})
     # |> Line.set_axis_ticks_text_range_offset(:x_axis, {1, 1})
     # |> Line.set_axis_ticks_text_range_offset(:x_axis, :auto)
     |> Line.add_axis_minor_ticks(:x_axis)
