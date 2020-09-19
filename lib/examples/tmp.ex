@@ -13,7 +13,7 @@ defmodule Examples.Tmp do
       Process.sleep(time)
       dt = DateTime.utc_now() |> DateTime.to_unix()
 
-      PubSub.broadcast(Examples.PubSub, "line_chart", {:gen, dt})
+      PubSub.broadcast(Examples.PubSub, "timeline_chart", {:gen, dt})
     end
   end
 end

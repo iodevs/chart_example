@@ -18,6 +18,7 @@ defmodule ExamplesWeb.Router do
     pipe_through :browser
 
     live "/", LineLive, :index
+    live "/timeline", TimeLineLive
     live "/gauge", GaugeLive
   end
 
