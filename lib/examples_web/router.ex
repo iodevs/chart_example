@@ -17,7 +17,8 @@ defmodule ExamplesWeb.Router do
   scope "/", ExamplesWeb do
     pipe_through :browser
 
-    live "/", LineLive, :index
+    live "/", BarLive, :index
+    live "/line", LineLive
     live "/timeline", TimeLineLive
     live "/gauge", GaugeLive
   end
