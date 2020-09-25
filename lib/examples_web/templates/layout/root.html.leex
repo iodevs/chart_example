@@ -10,21 +10,32 @@
     <script defer phx-track-static type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </head>
   <body>
-    <header>
-      <section class="container">
-        <nav role="navigation">
-          <ul>
-            <li><a href="https://hexdocs.pm/phoenix/overview.html">Get Started</a></li>
-            <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
-              <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
-            <% end %>
-          </ul>
-        </nav>
-        <a href="https://phoenixframework.org/" class="phx-logo">
-          <img src="<%= Routes.static_path(@conn, "/images/phoenix.png") %>" alt="Phoenix Framework Logo"/>
-        </a>
-      </section>
-    </header>
-    <%= @inner_content %>
+    <div class="container">
+      <header>
+          <nav role="navigation">
+            <ul>
+              <li><a href="https://hexdocs.pm/phoenix/overview.html">Get Started</a></li>
+              <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
+                <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
+              <% end %>
+            </ul>
+          </nav>
+          <a href="https://phoenixframework.org/" class="phx-logo">
+            <img src="<%= Routes.static_path(@conn, "/images/phoenix.png") %>" alt="Phoenix Framework Logo"/>
+          </a>
+      </header>
+
+      <aside class="sidebar">
+        <a class="button" href="http://localhost:4000/"><button>Bar</button></a>
+        <a class="button" href="http://localhost:4000/line"><button>Line</button></a>
+        <a class="button" href="http://localhost:4000/timeline"><button>Time Series</button></a>
+        <a class="button" href="http://localhost:4000/gauge"><button>Gauge</button></a>
+      </aside>
+
+      <main class="content">
+        <%= @inner_content %>
+      </main>
+
+    </div>
   </body>
 </html>

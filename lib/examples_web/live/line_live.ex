@@ -39,14 +39,14 @@ defmodule ExamplesWeb.LineLive do
 
   defp line_setup() do
     Line.setup()
-    |> Line.set_title_text("Graph")
+    |> Line.set_title_text("Line chart")
     |> Line.set_title_position({400, 50})
     |> Line.set_grid(:x_major)
     |> Line.set_grid(:y_major)
     |> Line.set_axis_label(:x_axis, "Axis X")
     |> Line.set_axis_label(:y_axis, "Axis Y")
     |> Line.set_axis_major_ticks_count(:x_axis, 5)
-    |> Line.set_axis_ticks_text_format(:x_axis, {:datetime, "%X"})
+    # |> Line.set_axis_ticks_text_format(:x_axis, {:datetime, "%X"})
     # |> Line.set_axis_ticks_text_range_offset(:x_axis, {1, 1})
     # |> Line.set_axis_ticks_text_range_offset(:x_axis, :auto)
     |> Line.add_axis_minor_ticks(:x_axis)

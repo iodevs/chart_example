@@ -1,16 +1,21 @@
 defmodule ExamplesWeb.TimeLineLive do
   use ExamplesWeb, :live_view
+
   alias Chart.TimeLine
+  alias Phoenix.PubSub
 
   @impl true
   def mount(_params, _session, socket) do
     Phoenix.PubSub.subscribe(Examples.PubSub, "timeline_chart")
+    gen_datetimes()
 
     {:ok, assign(socket, timeline: timeline_setup())}
   end
 
   @impl true
   def handle_info({:gen, x}, socket) do
+    gen_datetimes()
+
     data = [[{x, Enum.random(0..10)}], [{x, Enum.random(-10..10)}]]
     g = TimeLine.put(socket.assigns.timeline, data)
 
@@ -41,5 +46,12 @@ defmodule ExamplesWeb.TimeLineLive do
     |> TimeLine.add_axis_minor_ticks(:y_axis)
     |> TimeLine.set_axis_minor_ticks_count(:y_axis, 3)
     |> TimeLine.set_count_data(20)
+  end
+
+  defp gen_datetimes() do
+    Process.sleep(1000)
+    dt = DateTime.utc_now() |> DateTime.to_unix()
+
+    PubSub.broadcast(Examples.PubSub, "timeline_chart", {:gen, dt})
   end
 end
