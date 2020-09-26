@@ -16,8 +16,7 @@
 
   grid-template-areas:
     "header header"
-    "sidebar content"
-    "footer footer";
+    "sidebar content";
 
   grid-template-columns: 300px 1fr;
   grid-template-rows: 200px 1fr;
@@ -51,9 +50,17 @@ aside {
 main {
   grid-area: content;
   background: var(--bg-color, var(--background-block-color));
-  display: inline-grid;
+  padding: 2%;
+}
+
+.content {
+  display: grid;
+  // grid-template-columns: 1fr 1fr;
+  // grid-template-rows: 1fr 1fr;
   justify-items: center;
-  align-items: center;
+  // align-items: center;
+  // grid-gap: 1rem;
+  height: calc(100vh - 12rem - 200px - 2%);
 }
 
 footer {
@@ -68,7 +75,6 @@ footer {
 button {
   cursor: pointer;
 }
-
 
 /* LiveView specific classes for your customizations */
 .invalid-feedback {

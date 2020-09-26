@@ -46,6 +46,8 @@ defmodule ExamplesWeb.BarLive do
     |> Bar.set_title_position({400, 50})
     |> Bar.set_grid(:y_major)
     |> Bar.set_axis_label(:y_axis, "Axis Y")
+    |> Bar.set_axis_range({0, 9})
+    |> Bar.set_axis_range_limit(:fixed)
 
     # |> Bar.set_width(50)
     # |> Bar.set_axis_ticks_labels(["Foo 1", "Foo 2", "Foo 3", "Bar 4", "Bar 5"])
