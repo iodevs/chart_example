@@ -10,32 +10,32 @@
     <script defer phx-track-static type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </head>
   <body>
-    <div class="container">
-      <header>
-          <nav role="navigation">
-            <ul>
-              <li><a href="https://hexdocs.pm/phoenix/overview.html">Get Started</a></li>
-              <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
-                <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
-              <% end %>
-            </ul>
-          </nav>
-          <a href="https://phoenixframework.org/" class="phx-logo">
-            <img src="<%= Routes.static_path(@conn, "/images/phoenix.png") %>" alt="Phoenix Framework Logo"/>
-          </a>
-      </header>
+    <main class="container">
+      <div class="grid">
+        <div class="navbar">
+            <nav role="navigation">
+              <ul>
+                <li><a href="https://hexdocs.pm/phoenix/overview.html">Get Started</a></li>
+                <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
+                  <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
+                <% end %>
+              </ul>
+            </nav>
+            <a href="https://phoenixframework.org/" class="phx-logo">
+              <img src="<%= Routes.static_path(@conn, "/images/phoenix.png") %>" alt="Phoenix Framework Logo"/>
+            </a>
+        </div>
 
-      <aside class="sidebar">
-        <a class="button" href="http://localhost:4000/"><button>Bar</button></a>
-        <a class="button" href="http://localhost:4000/line"><button>Line</button></a>
-        <a class="button" href="http://localhost:4000/timeline"><button>Time Series</button></a>
-        <a class="button" href="http://localhost:4000/gauge"><button>Gauge</button></a>
-      </aside>
+        <div class="sidebar">
+          <a href="http://localhost:4000/" class="button-chart">Bar</a>
+          <a href="http://localhost:4000/line" class="button-chart">Line</a>
+          <a href="http://localhost:4000/timeline" class="button-chart">Time Series</a>
+          <a href="http://localhost:4000/gauge" class="button-chart">Gauge</a>
+        </div>
 
-      <main>
         <%= @inner_content %>
-      </main>
 
-    </div>
+      </div>
+    </main>
   </body>
 </html>
