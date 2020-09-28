@@ -21,6 +21,7 @@ defmodule ExamplesWeb.Router do
     live "/line", LineLive
     live "/timeline", TimeLineLive
     live "/gauge", GaugeLive
+    live "/dashboard_chart", DasboardChartLive
   end
 
   # Other scopes may use custom stacks.

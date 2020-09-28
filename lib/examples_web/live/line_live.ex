@@ -1,11 +1,14 @@
 defmodule ExamplesWeb.LineLive do
   use ExamplesWeb, :live_view
+
   alias Chart.Line
+  # alias Phoenix.PubSub
 
   @impl true
   def mount(_params, _session, socket) do
-    Phoenix.PubSub.subscribe(Examples.PubSub, "line_chart")
-    # generate_value()
+    # Phoenix.PubSub.subscribe(Examples.PubSub, "line_chart")
+
+    generate_value()
 
     # data = [[{1, 2}, {1.5, 5}, {2.2, 3.4}, {3, 3}]]
     # data = [[{1, 2}, {2, 5}, {3, 3.4}, {8, 3}]]
@@ -20,8 +23,10 @@ defmodule ExamplesWeb.LineLive do
   end
 
   @impl true
-  def handle_info({:gen, x}, socket) do
+  def handle_info({:gen_val, x}, socket) do
+    generate_value(x)
     # PubSub.broadcast(Examples.PubSub, "line_chart", {:gen, 23})
+
     data = [[{x, Enum.random(0..10)}], [{x, Enum.random(-10..10)}]]
     g = Line.put(socket.assigns.line, data)
 
@@ -52,5 +57,9 @@ defmodule ExamplesWeb.LineLive do
     |> Line.add_axis_minor_ticks(:x_axis)
     |> Line.add_axis_minor_ticks(:y_axis)
     |> Line.set_axis_minor_ticks_count(:y_axis, 3)
+  end
+
+  defp generate_value(init_val \\ -1) do
+    Process.send_after(self(), {:gen_val, init_val + 1}, 1_000)
   end
 end

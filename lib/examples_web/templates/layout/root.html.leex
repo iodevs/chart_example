@@ -22,7 +22,7 @@
               </ul>
             </nav>
             <a href="https://phoenixframework.org/" class="phx-logo">
-              <img src="<%= Routes.static_path(@conn, "/images/phoenix.png") %>" alt="Phoenix Framework Logo"/>
+              <img src="<%= Routes.static_path(@conn, "/images/phoenix.png") %>" class="img-responsive"/>
             </a>
         </div>
 
@@ -31,6 +31,7 @@
           <a href="http://localhost:4000/line" class="button-chart">Line</a>
           <a href="http://localhost:4000/timeline" class="button-chart">Time Series</a>
           <a href="http://localhost:4000/gauge" class="button-chart">Gauge</a>
+          <a href="http://localhost:4000/dashboard_chart" class="button-dashboard-chart">Dashboard</a>
         </div>
 
         <%= @inner_content %>

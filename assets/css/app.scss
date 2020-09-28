@@ -28,7 +28,6 @@ body {
 
 .container {
   padding: 2rem 8rem;
-  height: 100vh;
   background: var(--bg-color, var(--background-default-color));
 }
 
@@ -73,12 +72,58 @@ body {
   height: calc(100vh - 120px - 5rem);
 }
 
+.dashboard-chart {
+  grid-area: content;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    "bar line"
+    "timeline timeline"
+    "gaugeA gaugeB";
+  grid-gap: 2rem;
+  padding: 2rem;
+  background: var(--bg-color, var(--bg-content-color));
+  // height: calc(100vh - 120px - 5rem);
+}
+
+.bar {
+  grid-area: bar;
+  background: lightcoral;
+  width: 100%;
+}
+
+.line {
+  grid-area: line;
+  background: lightcoral;
+  width: 100%;
+}
+
+.timeline {
+  grid-area: timeline;
+  background: palegreen;
+  width: 100%;
+}
+
+.gauge-a {
+  grid-area: gaugeA;
+  border: 1px solid black;
+  width: 75%;
+}
+
+.gauge-b {
+  grid-area: gaugeB;
+  border: 1px solid black;
+  width: 75%;
+}
+
 .button-chart {
   border-radius: 6px;
   border: 2px solid darkslategray;
   font-family: Arial;
   color: #ffffff;
-  font-size: 17px;
+  font-size: 1.1vw;
   background: #86888a;
   padding: 10px 20px 10px 20px;
   margin: 1rem;
@@ -88,6 +133,28 @@ body {
 .button-chart:hover {
   background: #6c7275;
   text-decoration: none;
+}
+
+.button-dashboard-chart {
+  border-radius: 6px;
+  border: 2px solid darkslategray;
+  font-family: Arial;
+  color: darkslategray;
+  font-size: 1.1vw;
+  background: #fce23c;
+  padding: 10px 20px 10px 20px;
+  margin: 1rem;
+  text-decoration: none;
+}
+
+.button-dashboard-chart:hover {
+  background: #d1b932;
+  text-decoration: none;
+}
+
+.img-responsive {
+  max-width: 100%;
+  height: auto;
 }
 
 /* LiveView specific classes for your customizations */
