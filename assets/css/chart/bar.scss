@@ -1,0 +1,33 @@
+.bars {
+  --bar-default-color: #7b97a0;
+  fill: var(--bar-color, var(--bar-default-color));
+}
+
+#bar-0 {
+  fill: darkmagenta;
+}
+
+#bar-1 {
+  fill: darksalmon;
+}
+
+#bar-2 {
+  fill: darkseagreen;
+}
+
+#bar-0:hover {
+  fill: rgb(182, 85, 182);
+}
+
+#bar-1:hover {
+  fill: rgb(219, 168, 151);
+}
+
+#bar-2:hover {
+  fill: rgb(173, 184, 173);
+}
+
+#y_axis-label {
+  fill: var(--axis-label-color, #2d3436);
+  writing-mode: horizontal-tb;
+}

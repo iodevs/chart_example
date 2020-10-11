@@ -1,0 +1,177 @@
+#figure_bg {
+  fill: var(--figure_bg-color, white);
+}
+
+/* ================ SVG Responsivity =================  */
+.svg-container {
+  --svg-viewbox-width: 800px;
+  --svg-viewbox-height: 600px;
+  --chart-div-width: 60%;
+  --chart-div-width-default: 50%;
+
+  /* position: relative; */
+  width: var(--chart-div-width, var(--chart-div-width-default));
+  /* height: 0;
+  padding-top: calc(
+    (var(--svg-viewbox-height, 600) / var(--svg-viewbox-width, 800)) *
+      var(--chart-div-width, var(--chart-div-width-default))
+  ); */
+}
+
+.svg-content {
+  /* position: absolute;
+  left: 0;
+  top: 0; */
+}
+
+/* ====================== TITLE ======================  */
+#title {
+  font-size: 1.75em;
+  font-family: BlinkMacSystemFont, "Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-weight: 700;
+}
+
+/* ====================== PLOT ======================  */
+#plot {
+  fill: lightgray;
+}
+
+/* ====================== GRID ======================  */
+.grid {
+  --grid-minor-color: darkgrey;
+  --grid-minor-stroke-width: 1;
+  --grid-minor-stroke-linecap: butt;
+  --grid-minor-stroke-dasharray: 3;
+  --grid-major-color: darkgrey;
+  --grid-major-stroke-width: 1.2;
+  --grid-major-stroke-linecap: butt;
+  --grid-major-stroke-dasharray: 0;
+}
+
+.grid-x-major-line {
+  stroke: var(--grid-major-color, darkgrey);
+  stroke-width: var(--grid-major-stroke-width, 2);
+  stroke-linecap: var(--grid-major-stroke-linecap, butt);
+  stroke-dasharray: var(--grid-major-stroke-dasharray, 0);
+}
+
+.grid-x-minor-line {
+  stroke: var(--grid-major-color, darkgrey);
+  stroke-width: var(--grid-major-stroke-width, 2);
+  stroke-linecap: var(--grid-major-stroke-linecap, butt);
+  stroke-dasharray: var(--grid-major-stroke-dasharray, 0);
+}
+
+.grid-y-major-line {
+  stroke: var(--grid-major-color, darkgrey);
+  stroke-width: var(--grid-major-stroke-width, 2);
+  stroke-linecap: var(--grid-major-stroke-linecap, butt);
+  stroke-dasharray: var(--grid-major-stroke-dasharray, 0);
+}
+
+.grid-y-minor-line {
+  stroke: var(--grid-major-color, darkgrey);
+  stroke-width: var(--grid-major-stroke-width, 2);
+  stroke-linecap: var(--grid-major-stroke-linecap, butt);
+  stroke-dasharray: var(--grid-major-stroke-dasharray, 0);
+}
+
+/* ====================== AXIS ======================  */
+.axis {
+  --axis-color: #2d3436;
+  --axis-label-color: #2d3436;
+  --axis-stroke-width: 2;
+  --axis-stroke-linecap: butt;
+}
+
+#x_axis {
+  stroke: var(--axis-color, #2d3436);
+}
+
+#y_axis {
+  stroke: var(--axis-color, #2d3436);
+}
+
+.major-ticks-text {
+  --mt-font-size: 6px;
+  --mt-font-color: rgb(85, 58, 58);
+  --mt-font-opacity: 0.8;
+  --mt-font-family: "Open Sans", Verdana, Arial;
+  --mt-font-variant: normal;
+  --mt-font-weight: 600;
+}
+
+.x_axis-major-text {
+  font-family: var(--mt-font-family);
+  font-variant: var(--mt-font-variant);
+  font-weight: var(--mt-font-weight);
+  font-size: var(--mt-font-size);
+  fill: var(--mt-font-color);
+  opacity: var(--mt-font-opacity);
+}
+
+.x_axis-major-ticks {
+  --mjl-stroke-color: var(--axis-color, #2d3436);
+  --mjl-stroke-width: 2;
+  --mjl-stroke-linecap: butt;
+}
+
+#x_axis-major-ticks-line {
+  stroke: var(--mjl-stroke-color);
+  stroke-width: var(--mjl-stroke-width);
+  stroke-linecap: var(--mjl-stroke-linecap);
+}
+
+.x_axis-minor-ticks {
+  --mjl-stroke-color: var(--axis-color, #2d3436);
+  --mjl-stroke-width: 1.5;
+  --mjl-stroke-linecap: butt;
+}
+
+#x_axis-minor-ticks-line {
+  stroke: var(--mjl-stroke-color);
+  stroke-width: var(--mjl-stroke-width);
+  stroke-linecap: var(--mjl-stroke-linecap);
+}
+
+#x_axis-label {
+  fill: var(--axis-label-color, #2d3436);
+}
+
+.y_axis-major-text {
+  font-family: var(--mt-font-family);
+  font-variant: var(--mt-font-variant);
+  font-weight: var(--mt-font-weight);
+  font-size: var(--mt-font-size);
+  fill: var(--mt-font-color);
+  opacity: var(--mt-font-opacity);
+}
+
+.y_axis-major-ticks {
+  --mjl-stroke-color: #2d3436;
+  --mjl-stroke-width: 2;
+  --mjl-stroke-linecap: butt;
+}
+
+#y_axis-major-ticks-line {
+  stroke: var(--mjl-stroke-color);
+  stroke-width: var(--mjl-stroke-width);
+  stroke-linecap: var(--mjl-stroke-linecap);
+}
+
+.y_axis-minor-ticks {
+  --mjl-stroke-color: var(--axis-color, #2d3436);
+  --mjl-stroke-width: 1.5;
+  --mjl-stroke-linecap: butt;
+}
+
+#y_axis-minor-ticks-line {
+  stroke: var(--mjl-stroke-color);
+  stroke-width: var(--mjl-stroke-width);
+  stroke-linecap: var(--mjl-stroke-linecap);
+}
+
+#y_axis-label {
+  fill: var(--axis-label-color, #2d3436);
+  writing-mode: vertical-lr;
+}

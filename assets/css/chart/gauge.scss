@@ -1,0 +1,138 @@
+.gauge {
+  --gauge-bg-border-width: 20;
+  --gauge-bg-border-color: #636e72;
+  --gauge-bg-border-opacity: 1;
+  --gauge-bg-width: 18;
+  --gauge-bg-width-color: #dfe6e9;
+  --gauge-bg-width-opacity: 0.5;
+  --gauge-value-width: 10;
+  --gauge-value-color-default: #6c5ce7;
+  --gauge-value-color-warning: orange;
+  --gauge-value-color-normal: green;
+  --gauge-value-color-critical: red;
+  --gauge-value-opacity: 0.75;
+}
+
+.major-ticks {
+  --mjl-stroke: #2d3436;
+  --mjl-stroke-width: 1.2;
+  --mjl-stroke-linecap: butt;
+}
+
+.major-ticks-text {
+  --mt-font-size: 6px;
+  --mt-font-color: rgb(85, 58, 58);
+  --mt-font-opacity: 0.8;
+  --mt-font-family: "Open Sans", Verdana, Arial;
+  --mt-font-variant: normal;
+  --mt-font-weight: 600;
+}
+
+.value-font {
+  --vt-font-size: 18px;
+  --vt-font-color: black;
+  --vt-font-opacity: 0.75;
+  --vt-font-family: "Open Sans", Verdana, Arial;
+  --vt-font-weight: bold;
+  --vt-font-variant: normal;
+}
+
+.thresholds {
+  --thresholds-low-stroke: #db891e;
+  --thresholds-low-stroke-width: 14;
+  --thresholds-low-stroke-linecap: butt;
+  --thresholds-low-opacity: 1;
+
+  --thresholds-high-stroke: #db1e2e;
+  --thresholds-high-stroke-width: 14;
+  --thresholds-high-stroke-linecap: butt;
+  --thresholds-high-opacity: 1;
+}
+
+#gauge-bg-border {
+  stroke-width: var(--gauge-bg-border-width);
+  stroke: var(--gauge-bg-border-color);
+  stroke-opacity: var(--gauge-bg-border-opacity);
+  fill: none;
+}
+
+.gauge-bg-border-bottom-lines {
+  stroke-width: var(--gauge-bg-border-width);
+  stroke: var(--gauge-bg-border-color);
+  stroke-opacity: var(--gauge-bg-border-opacity);
+  fill: none;
+}
+
+#gauge-bg {
+  stroke-width: var(--gauge-bg-width);
+  stroke: var(--gauge-bg-width-color);
+  stroke-opacity: var(--gauge-bg-width-opacity);
+  fill: none;
+}
+
+#gauge-value {
+  stroke-width: var(--gauge-value-width);
+  stroke: var(--gauge-value-color-default);
+  stroke-opacity: var(--gauge-value-opacity);
+  fill: none;
+}
+
+.gauge-value-warning {
+  stroke-width: var(--gauge-value-width);
+  stroke: var(--gauge-value-color-warning) !important;
+  stroke-opacity: var(--gauge-value-opacity);
+  fill: none;
+}
+
+.gauge-value-normal {
+  stroke-width: var(--gauge-value-width);
+  stroke: var(--gauge-value-color-normal) !important;
+  stroke-opacity: var(--gauge-value-opacity);
+  fill: none;
+}
+
+.gauge-value-critical {
+  stroke-width: var(--gauge-value-width);
+  stroke: var(--gauge-value-color-critical) !important;
+  stroke-opacity: var(--gauge-value-opacity);
+  fill: none;
+}
+
+#major-line-ticks {
+  stroke: var(--mjl-stroke);
+  stroke-width: var(--mjl-stroke-width);
+  stroke-linecap: var(--mjl-stroke-linecap);
+}
+
+.major-text {
+  font-family: var(--mt-font-family);
+  font-variant: var(--mt-font-variant);
+  font-weight: var(--mt-font-weight);
+  font-size: var(--mt-font-size);
+  fill: var(--mt-font-color);
+  opacity: var(--mt-font-opacity);
+}
+
+.value-text {
+  font-size: var(--vt-font-size);
+  font-family: var(--vt-font-family);
+  font-weight: var(--vt-font-weight);
+  fill: var(--vt-font-color);
+  opacity: var(--vt-font-opacity);
+}
+
+.treshold_low {
+  stroke: var(--thresholds-low-stroke);
+  stroke-width: var(--thresholds-low-stroke-width);
+  stroke-linecap: var(--thresholds-low-stroke-linecap);
+  stroke-opacity: var(--thresholds-low-opacity);
+  fill: none;
+}
+
+.treshold_high {
+  stroke: var(--thresholds-high-stroke);
+  stroke-width: var(--thresholds-high-stroke-width);
+  stroke-linecap: var(--thresholds-high-stroke-linecap);
+  stroke-opacity: var(--thresholds-high-opacity);
+  fill: none;
+}

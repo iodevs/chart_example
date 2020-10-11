@@ -1,0 +1,27 @@
+
+.lines {
+  fill: none;
+  --lines-stroke-width: 2;
+  --lines-stroke-linejoin: round;
+  --lines-hover-stroke-width: calc(var(--lines-stroke-width) + 2);
+}
+
+#line-0 {
+  stroke-width: var(--lines-stroke-width, 2);
+  stroke-linejoin: var(--lines-stroke-linejoin);
+  stroke: darkmagenta;
+}
+
+#line-1 {
+  stroke-width: var(--lines-stroke-width, 2);
+  stroke: darksalmon;
+}
+
+#line-2 {
+  stroke-width: var(--lines-stroke-width, 2);
+  stroke: darkseagreen;
+}
+
+#line-0:hover, #line-1:hover, #line-2:hover {
+  stroke-width: var(--lines-hover-stroke-width, 4);
+}
