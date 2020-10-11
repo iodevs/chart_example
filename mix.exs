@@ -44,17 +44,14 @@ defmodule Examples.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      chart_lib(Mix.env(), "0.1.0")
+      {:chart, git: "https://github.com/iodevs/chart_example.git", override: true}
+      # chart_lib(Mix.env(), "0.1.0")
     ]
   end
 
-  defp chart_lib(env, _tag) when env in [:dev, :test] do
-    {:chart, git: "git@github.com:iodevs/chart.git", override: true}
-  end
-
-  defp chart_lib(_, _tag) do
-    {:chart, git: "https://github.com/iodevs/chart_example.git", override: true}
-  end
+  # defp chart_lib(env, _tag) when env in [:dev, :test] do
+  #   {:chart, git: "git@github.com:iodevs/chart.git", override: true}
+  # end
 
   # defp chart_lib(_, tag) do
   #   {:chart, "~> #{tag}"}
