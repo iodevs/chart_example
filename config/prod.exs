@@ -12,7 +12,7 @@ use Mix.Config
 config :examples, ExamplesWeb.Endpoint,
   url: [
     scheme: "https",
-    host: "chart.herokuapp.com",
+    host: "exchart.herokuapp.com",
     port: 443
   ],
   cache_static_manifest: "priv/static/cache_manifest.json"
