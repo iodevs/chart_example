@@ -9,7 +9,7 @@ defmodule Examples.Tmp do
   end
 
   def gen_datetimes(time, num_sample) do
-    for x <- 1..num_sample do
+    for _x <- 1..num_sample do
       Process.sleep(time)
       dt = DateTime.utc_now() |> DateTime.to_unix()
 
