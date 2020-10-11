@@ -52,10 +52,13 @@ defmodule Examples.MixProject do
     {:chart, git: "git@github.com:iodevs/chart.git", override: true}
   end
 
-  defp chart_lib(_, tag) do
-    # {:chart, "~> #{tag}"}
-    {:chart, git: "git@github.com:iodevs/chart.git"}
+  defp chart_lib(_, _tag) do
+    {:chart, git: "https://github.com/iodevs/chart_example.git"}
   end
+
+  # defp chart_lib(_, tag) do
+  #   {:chart, "~> #{tag}"}
+  # end
 
   # Aliases are shortcuts or tasks specific to the current project.
   # For example, to install project dependencies and perform other setup tasks, run:
