@@ -10,6 +10,7 @@ use Mix.Config
 # which you should run after static files are built and
 # before starting your production server.
 config :examples, ExamplesWeb.Endpoint,
+  http: [port: {:system, "PORT"}],
   url: [
     scheme: "https",
     host: "exchart.herokuapp.com",
