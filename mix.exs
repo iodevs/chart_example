@@ -53,7 +53,7 @@ defmodule Examples.MixProject do
   end
 
   defp chart_lib(_, _tag) do
-    {:chart, git: "https://github.com/iodevs/chart_example.git"}
+    {:chart, git: "https://github.com/iodevs/chart_example.git", override: true}
   end
 
   # defp chart_lib(_, tag) do
