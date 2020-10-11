@@ -48,12 +48,13 @@ defmodule Examples.MixProject do
     ]
   end
 
-  defp chart_lib(:dev, _tag) do
-    {:chart, path: "../chart", override: true}
+  defp chart_lib(env, _tag) when env in [:dev, :test] do
+    {:chart, git: "git@github.com:iodevs/chart.git", override: true}
   end
 
   defp chart_lib(_, tag) do
-    {:chart, "~> #{tag}"}
+    # {:chart, "~> #{tag}"}
+    {:chart, git: "git@github.com:iodevs/chart.git"}
   end
 
   # Aliases are shortcuts or tasks specific to the current project.
