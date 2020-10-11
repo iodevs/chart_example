@@ -5,6 +5,7 @@ defmodule ExamplesWeb.BarLive do
   @impl true
   def mount(_params, _session, socket) do
     Phoenix.PubSub.subscribe(Examples.PubSub, "line_chart")
+    generate_bar_values()
 
     {:ok, assign(socket, bar: bar_setup())}
   end
@@ -12,6 +13,7 @@ defmodule ExamplesWeb.BarLive do
   @impl true
   def handle_info({:gen, _x}, socket) do
     # Examples.Tmp.gen_numbers(1000, 100)
+    generate_bar_values()
 
     data = %{
       city_1: Enum.random(0..10),
@@ -51,5 +53,9 @@ defmodule ExamplesWeb.BarLive do
 
     # |> Bar.set_width(50)
     # |> Bar.set_axis_ticks_labels(["Foo 1", "Foo 2", "Foo 3", "Bar 4", "Bar 5"])
+  end
+
+  defp generate_bar_values(time \\ 1000) do
+    Process.send_after(self(), {:gen, 1}, time)
   end
 end
