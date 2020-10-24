@@ -16,7 +16,7 @@ config :examples, ExamplesWeb.Endpoint,
       "node_modules/webpack/bin/webpack.js",
       "--mode",
       "development",
-      "--watch-options-stdin",
+      "--watch",
       cd: Path.expand("../assets", __DIR__)
     ]
   ]
